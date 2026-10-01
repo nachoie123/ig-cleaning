@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'">
+<title>IG Cleaning</title>
+<style>
+  :root{--bg:#fafafa;--card:#fff;--ink:#111;--mute:#737373;--line:#e5e5e5;--acc:#0095f6;--red:#ed4956;--ok:#2e9e5b;--warn:#c27c0e}
+  @media (prefers-color-scheme:dark){:root{--bg:#0b0b0b;--card:#171717;--ink:#f2f2f2;--mute:#a3a3a3;--line:#2a2a2a}}
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.4 -apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif;background:var(--bg);color:var(--ink)}
+  header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  h1{font-size:18px;margin:0 8px 0 0}
+  .pill{padding:4px 10px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--mute);font-size:12px}
+  .pill.on{color:var(--ok);border-color:var(--ok)}
+  button{font:inherit;border:0;border-radius:8px;padding:8px 14px;background:var(--acc);color:#fff;font-weight:600;cursor:pointer}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  button.red{background:var(--red)}
+  button:disabled{opacity:.4;cursor:default}
+  .tabs{display:flex;gap:4px;margin-left:auto}
+  .tabs button{background:transparent;color:var(--mute);border:1px solid transparent}
+  .tabs button.on{color:var(--ink);border-color:var(--line);background:var(--card)}
+  .bar{height:4px;background:var(--line);border-radius:4px;overflow:hidden;width:100%}
+  .bar i{display:block;height:100%;background:var(--acc);width:0;transition:width .3s}
+  #prog{width:100%;display:none;gap:6px;flex-direction:column;color:var(--mute);font-size:12px}
+  .filters{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:12px 20px;color:var(--mute)}
+  .filters label{display:flex;gap:6px;align-items:center;cursor:pointer}
+  input[type=number],input[type=search],select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+  input[type=number]{width:90px}
+  main{padding:4px 20px 110px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;gap:12px;align-items:center;cursor:pointer;position:relative}
+  .card.sel{border-color:var(--red);box-shadow:0 0 0 1px var(--red)}
+  .card.cur{outline:2px solid var(--acc);outline-offset:2px}
+  .grid{user-select:none;-webkit-user-select:none}
+  .hint{color:var(--mute);font-size:12px}
+  .card.prot{opacity:.55;cursor:default}
+  .card img{width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--line);flex:none}
+  .card .who{min-width:0;flex:1}
+  .card .u{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .n{color:var(--mute);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+  .tag{font-size:11px;padding:1px 7px;border-radius:99px;background:var(--bg);border:1px solid var(--line);color:var(--mute)}
+  .tag.r{color:var(--red);border-color:color-mix(in srgb,var(--red) 40%,transparent)}
+  .tag.g{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 40%,transparent)}
+  .tag.y{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 40%,transparent)}
+  .star{position:absolute;top:6px;right:8px;background:none;color:var(--mute);padding:2px;font-size:16px;font-weight:400}
+  .star.on{color:#f5b400}
+  footer{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:12px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  footer .grow{flex:1;color:var(--mute);font-size:13px}
+  .empty{color:var(--mute);text-align:center;padding:80px 20px;font-size:15px}
+  .empty b{color:var(--ink)}
+  .err{color:var(--red)}
+  dialog{border:1px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);max-width:420px}
+  dialog::backdrop{background:rgba(0,0,0,.4)}
+</style>
+</head>
+<body>
+<header>
+  <h1>IG Cleaning</h1>
+  <span id="sess" class="pill">Sin sesión</span>
+  <button id="btnAnalyze">Analizar mi cuenta</button>
+  <button id="btnCancel" class="ghost" style="display:none">Cancelar</button>
+  <div class="tabs">
+    <button data-tab="list" class="on">Cuentas que sigo</button>
+    <button data-tab="done">Dejados de seguir <span id="doneN"></span></button>
+  </div>
+  <div id="prog"><span id="progTxt"></span><div class="bar"><i id="progBar"></i></div></div>
+</header>
+
+<section id="tab-list">
+  <div class="filters">
+    <span>Mostrar a quien:</span>
+    <select id="rule">
+      <option value="any">no me sigue O no hablamos</option>
+      <option value="nofollow">no me sigue</option>
+      <option value="nochat">no hablamos</option>
+      <option value="both">no me sigue Y no hablamos</option>
+      <option value="all">todos</option>
+    </select>
+    <label>“No hablamos” = sin mensajes en <input type="number" id="months" min="1" value="12"> meses</label>
+    <label>Proteger con más de <input type="number" id="infl" min="0" step="1000" value="10000"> seguidores</label>
+    <input type="search" id="q" placeholder="Buscar…">
+    <span class="hint">Clic marca · ⇧+clic marca el tramo · ⇧+flechas va ampliando · ⌘A todas · Esc quita</span>
+  </div>
+  <main><div id="grid" class="grid"></div><div id="empty" class="empty"></div></main>
+</section>
+
+<section id="tab-done" style="display:none">
+  <main><div id="doneGrid" class="grid"></div><div id="doneEmpty" class="empty"></div></main>
+</section>
+
+<footer>
+  <button id="btnSelAll" class="ghost">Seleccionar visibles</button>
+  <button id="btnNone" class="ghost">Quitar selección</button>
+  <div class="grow" id="foot"></div>
+  <button id="btnGo" class="red" disabled>Dejar de seguir</button>
+</footer>
+
+<dialog id="dlg">
+  <p id="dlgTxt"></p>
+  <p style="color:var(--mute);font-size:13px">Va a ritmo de persona a propósito: una cada <span id="dlgPace"></span>, un descanso cada <span id="dlgBurst"></span> y como mucho <span id="dlgCap"></span> al día. Si son más, sigue mañana sola si dejas la app abierta. Al primer aviso de Instagram se para 24 h y no insiste.</p>
+  <div style="display:flex;gap:8px;justify-content:flex-end">
+    <button class="ghost" id="dlgNo">Cancelar</button><button class="red" id="dlgYes">Sí, empezar</button>
+  </div>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+let D={accounts:{},whitelist:[],queue:[],unfollowed:[]}, ST={}, sel=new Set(), tab='list';
+const api=()=>window.pywebview.api;
+const fmt=n=>n==null?'?':n>=1e6?(n/1e6).toFixed(1).replace('.0','')+'M':n>=1e3?(n/1e3).toFixed(1).replace('.0','')+'K':String(n);
+const ago=s=>{if(!s)return null;const d=(Date.now()/1000-s)/86400;return d<1?'hoy':d<31?Math.round(d)+' d':d<365?Math.round(d/30)+' meses':(d/365).toFixed(1).replace('.0','')+' años'};
+const pic=pk=>`pics/${pk}.jpg`;
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function classify(pk,a){
+  const months=+$('#months').value||12, infl=+$('#infl').value||0;
+  const noChat=!a.last_dm || a.last_dm < Date.now()/1000 - months*30*86400;
+  const noFollow=!a.follows_me;
+  let prot=null;
+  if(D.whitelist.includes(pk)) prot='Lista blanca';
+  else if(a.verified) prot='Verificada';
+  else if(infl && a.followers!=null && a.followers>=infl) prot='Influencer';
+  return {noChat,noFollow,prot};
+}
+
+function visible(){
+  const rule=$('#rule').value, q=$('#q').value.trim().toLowerCase();
+  return Object.entries(D.accounts).filter(([pk,a])=>{
+    if(q && !(a.username+' '+a.full_name).toLowerCase().includes(q)) return false;
+    const c=classify(pk,a);
+    return rule==='all' || (rule==='any'&&(c.noChat||c.noFollow)) || (rule==='nofollow'&&c.noFollow)
+      || (rule==='nochat'&&c.noChat) || (rule==='both'&&c.noChat&&c.noFollow);
+  }).sort((x,y)=>(classify(...x).prot?1:0)-(classify(...y).prot?1:0) || (x[1].last_dm||0)-(y[1].last_dm||0));
+}
+
+function render(){
+  const list=visible(), queued=new Set(D.queue);
+  $('#grid').innerHTML=list.map(([pk,a])=>{
+    const c=classify(pk,a), q=queued.has(pk);
+    const tags=[
+      c.noFollow?'<span class="tag r">No te sigue</span>':'<span class="tag g">Te sigue</span>',
+      a.last_dm?`<span class="tag ${c.noChat?'y':'g'}">Último mensaje: ${ago(a.last_dm)}</span>`:'<span class="tag y">Sin mensajes</span>',
+      a.followers!=null?`<span class="tag">${fmt(a.followers)} seguidores</span>`:'',
+      c.prot?`<span class="tag g">🛡 ${c.prot}</span>`:'', q?'<span class="tag r">En cola</span>':''
+    ].join('');
+    return `<div class="card ${c.prot||q?'prot':''} ${sel.has(pk)?'sel':''}" data-pk="${pk}">
+      <img src="${pic(pk)}" onerror="this.style.visibility='hidden'">
+      <div class="who"><div class="u">@${esc(a.username)}</div><div class="n">${esc(a.full_name)||'&nbsp;'}</div><div class="tags">${tags}</div></div>
+      <button class="star ${D.whitelist.includes(pk)?'on':''}" data-star="${pk}" title="Lista blanca: nunca dejar de seguir">★</button></div>`;
+  }).join('');
+  const n=Object.keys(D.accounts).length;
+  $('#empty').innerHTML = !n ? (ST.logged_in?'Pulsa <b>Analizar mi cuenta</b> para empezar.':'1. Inicia sesión en la ventana <b>Instagram</b>.<br>2. Vuelve aquí y pulsa <b>Analizar mi cuenta</b>.')
+    + '<p style="font-size:12px;max-width:520px;margin:28px auto 0">Tus datos no salen de este Mac: la app no guarda tu contraseña ni envía nada a ningún servidor salvo a Instagram. Instagram no permite oficialmente automatizar, así que la app va despacio a propósito; úsala bajo tu responsabilidad.</p>'
+    : !list.length ? 'Nadie cumple este filtro.' : '';
+  renderDone(); if(cur>=0)paint(); else foot();
+}
+
+function renderDone(){
+  $('#doneN').textContent=D.unfollowed.length?`(${D.unfollowed.length})`:'';
+  $('#doneGrid').innerHTML=D.unfollowed.map(u=>`<div class="card" style="cursor:default">
+    <img src="${pic(u.pk)}" onerror="this.style.visibility='hidden'">
+    <div class="who"><div class="u"><a href="#" data-open="${esc(u.username)}" style="color:inherit">@${esc(u.username)}</a></div><div class="n">${esc(u.full_name)||'&nbsp;'}</div>
+    <div class="tags"><span class="tag">${new Date(u.at).toLocaleString('es-ES',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</span>
+    ${u.refollowed?'<span class="tag g">La vuelves a seguir</span>':`<button class="ghost" style="padding:2px 8px;font-size:11px" data-refollow="${u.pk}">Volver a seguir</button>`}</div></div></div>`).join('');
+  $('#doneEmpty').textContent=D.unfollowed.length?'':'Aquí saldrá cada cuenta que dejes de seguir, con su foto y su nombre.';
+}
+
+function foot(){
+  const w=ST.worker?` · ${ST.worker}`:'';
+  $('#foot').textContent= tab==='done' ? `${D.unfollowed.length} cuentas dejadas de seguir · ${ST.today||0} hoy` + (ST.queue?` · ${ST.queue} en cola${w}`:'')
+    : `${sel.size} seleccionadas · ${Object.keys(D.accounts).length} cuentas que sigues` + (ST.queue?` · ${ST.queue} en cola${w}`:'');
+  $('#btnGo').disabled=!sel.size; $('#btnGo').textContent=sel.size?`Dejar de seguir a ${sel.size}`:'Dejar de seguir';
+}
+
+async function refreshData(){ D=await api().data(); for(const pk of [...sel]) if(!D.accounts[pk]||D.queue.includes(pk)) sel.delete(pk); render(); }
+
+let lastTask='', lastUnf=0, lastQ=0;
+async function poll(){
+  try{
+    ST=await api().status();
+    const t=ST.task;
+    $('#sess').textContent=ST.logged_in?('Conectado'+(ST.me?.username?' como @'+ST.me.username:'')):'Sin sesión: entra en la ventana Instagram';
+    $('#sess').classList.toggle('on',ST.logged_in);
+    $('#btnAnalyze').disabled=t.running||!ST.logged_in;
+    $('#btnAnalyze').textContent=ST.analyzed_at?'Volver a analizar':'Analizar mi cuenta';
+    $('#btnCancel').style.display=t.running?'':'none';
+    $('#prog').style.display=(t.running||t.error)?'flex':'none';
+    $('#progTxt').innerHTML=t.error?`<span class="err">${esc(t.error)}</span>`:esc(t.step)+(t.total?` ${t.done}/${t.total}`:t.done?` (${t.done})`:'');
+    $('#progBar').style.width=t.total?(100*t.done/t.total)+'%':(t.running?'15%':'0');
+    const key=t.running+t.step;
+    const tick=Math.floor(Date.now()/30000);
+    if((lastTask&&key!==lastTask&&!t.running) || (t.running&&tick!==poll.tick&&(poll.tick=tick)) || ST.logged_in!==poll.li&&((poll.li=ST.logged_in),1) || ST.queue!==lastQ || D.unfollowed.length!==lastUnf){ await refreshData(); lastUnf=D.unfollowed.length; lastQ=ST.queue; }
+    lastTask=key; foot();
+  }catch(e){console.error(e)}
+  setTimeout(poll,2000);
+}
+
+// ---- selección estilo Finder: clic, ⇧+clic (tramo), flechas y ⇧+flechas ----
+let cur=-1, anchor=-1, base=new Set();
+const cards=()=>[...document.querySelectorAll('#grid .card')];
+const pickable=c=>c&&!c.classList.contains('prot');
+function cols(){const g=getComputedStyle($('#grid')).gridTemplateColumns;return Math.max(1,g.split(' ').filter(Boolean).length)}
+function paint(){cards().forEach((c,i)=>{c.classList.toggle('sel',sel.has(c.dataset.pk));c.classList.toggle('cur',i===cur)});foot()}
+function selRange(a,b){const cs=cards();sel=new Set(base);for(let i=Math.min(a,b);i<=Math.max(a,b);i++)if(pickable(cs[i]))sel.add(cs[i].dataset.pk)}
+$('#grid').addEventListener('click',async e=>{
+  const star=e.target.closest('[data-star]');
+  if(star){e.stopPropagation(); await api().toggle_whitelist(star.dataset.star); sel.delete(star.dataset.star); await refreshData(); return;}
+  const card=e.target.closest('.card'); if(!card) return;
+  const i=cards().indexOf(card);
+  if(e.shiftKey&&anchor>=0){selRange(anchor,i)}
+  else{ if(!pickable(card)){cur=i;paint();return}
+    const pk=card.dataset.pk; sel.has(pk)?sel.delete(pk):sel.add(pk); anchor=i; base=new Set(sel); }
+  cur=i; paint();
+});
+document.addEventListener('keydown',e=>{
+  if(tab!=='list'||$('#dlg').open||/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+  const cs=cards(); if(!cs.length)return;
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='a'){e.preventDefault();$('#btnSelAll').click();return}
+  if(e.key==='Escape'){sel.clear();anchor=-1;paint();return}
+  if(e.key===' '&&cur>=0){e.preventDefault();const c=cs[cur];if(pickable(c)){sel.has(c.dataset.pk)?sel.delete(c.dataset.pk):sel.add(c.dataset.pk);anchor=cur;base=new Set(sel)}paint();return}
+  const step={ArrowRight:1,ArrowLeft:-1,ArrowDown:cols(),ArrowUp:-cols()}[e.key]; if(!step)return;
+  e.preventDefault();
+  const from=cur<0?0:cur, to=cur<0?0:Math.max(0,Math.min(cs.length-1,from+step));
+  if(e.shiftKey){
+    if(anchor<0){anchor=from;base=new Set(sel)}
+    cur=to; selRange(anchor,cur);
+  }else{cur=to; anchor=cur; base=new Set(sel)}
+  paint(); cs[cur].scrollIntoView({block:'nearest'});
+});
+$('#doneGrid').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-refollow]'); if(!b) return; e.preventDefault();
+  b.disabled=true; b.textContent='…'; const ok=await api().refollow(b.dataset.refollow);
+  if(!ok){b.textContent='Error, reintenta';b.disabled=false} else await refreshData();
+});
+$('#btnSelAll').onclick=()=>{visible().forEach(([pk,a])=>{if(!classify(pk,a).prot&&!D.queue.includes(pk))sel.add(pk)});render()};
+$('#btnNone').onclick=()=>{sel.clear();anchor=-1;render()};
+['#rule','#months','#infl','#q'].forEach(s=>$(s).addEventListener('input',()=>{
+  // lo que pase a estar protegido sale de la selección
+  for(const pk of [...sel]) if(classify(pk,D.accounts[pk]).prot) sel.delete(pk);
+  render();
+}));
+$('#btnAnalyze').onclick=async()=>{await api().analyze(+$("#infl").value||10000)};
+$('#btnCancel').onclick=()=>api().cancel();
+$('#btnGo').onclick=()=>{
+  const s=ST.settings||{};
+  $('#dlgTxt').innerHTML=`Vas a dejar de seguir a <b>${sel.size}</b> cuentas.`;
+  $('#dlgPace').textContent=`${s.min_delay}–${s.max_delay} s`; $('#dlgCap').textContent=s.daily_cap;
+  $('#dlgBurst').textContent=`${s.burst} (${s.rest_min} min)`;
+  $('#dlg').showModal();
+};
+$('#dlgNo').onclick=()=>$('#dlg').close();
+$('#dlgYes').onclick=async()=>{ $('#dlg').close(); await api().enqueue([...sel]); sel.clear(); await refreshData(); };
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  tab=b.dataset.tab; document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  $('#tab-list').style.display=tab==='list'?'':'none'; $('#tab-done').style.display=tab==='done'?'':'none';
+  ['#btnSelAll','#btnNone','#btnGo'].forEach(s=>$(s).style.display=tab==='list'?'':'none'); foot();
+});
+
+window.addEventListener('pywebviewready',async()=>{ await refreshData(); poll(); });
+</script>
+</body>
+</html>

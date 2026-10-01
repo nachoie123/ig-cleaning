@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IG Cleaning</title>
+<meta name="description" content="A free Mac app that unfollows the Instagram accounts that don't follow you back, at a human pace.">
+<meta property="og:title" content="IG Cleaning — clean up your Instagram">
+<meta property="og:description" content="Free Mac app: unfollow who doesn't follow you back, at a human pace. Your password never touches the app.">
+<meta property="og:image" content="https://nachosanbenito.com/ig-cleaning/poster.jpg">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#faf8f5;--card:#fff;--ink:#141414;--mute:#6b6b6b;--line:#ece7e2;--g:linear-gradient(100deg,#f0503a,#d9327e 55%,#8b3fd9)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#140a1b;--card:#1f1229;--ink:#f6f2f8;--mute:#b3a8bb;--line:#33233f}}
+  :root[data-theme="dark"]{--bg:#140a1b;--card:#1f1229;--ink:#f6f2f8;--mute:#b3a8bb;--line:#33233f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Plus Jakarta Sans",-apple-system,sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;padding:48px 16px 72px}
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  @media (max-width:820px){.hero{grid-template-columns:1fr}.video{order:-1}}
+  .brand{display:flex;gap:12px;align-items:center;font-weight:700}
+  .brand img{width:44px;height:44px;border-radius:11px}
+  h1{font-size:clamp(40px,6vw,64px);line-height:1.02;letter-spacing:-.03em;margin:22px 0 16px;font-weight:800}
+  h1 span{background:var(--g);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--mute);font-size:18px;max-width:520px}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 10px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:999px;font-weight:700;text-decoration:none}
+  .btn.main{background:var(--g);color:#fff;box-shadow:0 10px 30px rgba(217,50,126,.3)}
+  .btn.ghost{border:1px solid var(--line);color:var(--ink);background:var(--card)}
+  .small{color:var(--mute);font-size:13px}
+  .video video{width:100%;max-width:380px;display:block;margin:0 auto;border-radius:28px;box-shadow:0 30px 80px rgba(60,20,80,.25);background:#000}
+  h2{font-size:28px;letter-spacing:-.02em;margin:72px 0 20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px}
+  .card b{display:block;margin-bottom:6px}
+  .card p{margin:0;color:var(--mute);font-size:15px}
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  ol.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px 20px 18px 64px;position:relative}
+  ol.steps li::before{content:counter(s);position:absolute;left:20px;top:16px;width:30px;height:30px;border-radius:50%;background:var(--g);color:#fff;font-weight:800;display:grid;place-items:center}
+  .warn{border-color:#f0b429;background:color-mix(in srgb,#f0b429 10%,var(--card))}
+  kbd{font-family:inherit;font-weight:700}
+  footer{margin-top:64px;color:var(--mute);font-size:14px;text-align:center}
+  footer a{color:inherit}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="brand"><img src="icon.png" alt="">IG Cleaning</div>
+      <h1>Clean up your Instagram, <span>at a human pace.</span></h1>
+      <p class="lead">A free Mac app that finds who doesn't follow you back — or who you never talk to — protects influencers and friends, and unfollows the rest slowly enough that Instagram doesn't mind.</p>
+      <div class="cta">
+        <a class="btn main" href="https://github.com/nachoie123/ig-cleaning/releases/latest/download/IG-Cleaning.dmg">⬇ Download for Mac</a>
+        <a class="btn ghost" href="https://github.com/nachoie123/ig-cleaning">GitHub</a>
+      </div>
+      <p class="small">Free & open source · macOS 11+ · Apple Silicon and Intel · 18 MB</p>
+    </div>
+    <div class="video"><video src="ig-cleaning-promo.mp4" poster="poster.jpg" controls playsinline preload="metadata"></video></div>
+  </section>
+
+  <h2>What it does</h2>
+  <div class="grid">
+    <div class="card"><b>Analyzes your account</b><p>Everyone you follow, who follows you back and when you last messaged them.</p></div>
+    <div class="card"><b>Protects who matters</b><p>Verified accounts and anyone over 10,000 followers are shielded. A ★ whitelist keeps friends safe.</p></div>
+    <div class="card"><b>Select like in Finder</b><p>Click, <kbd>⇧</kbd>-click for a range, <kbd>⇧</kbd>+arrows to extend, <kbd>⌘A</kbd> for all.</p></div>
+    <div class="card"><b>Human pace</b><p>One every 20–40 s, max 60/hour and 150/day. At the first warning it stops for 24 h.</p></div>
+    <div class="card"><b>A receipt</b><p>Photo, name and @username of everyone removed, with a Follow again button.</p></div>
+    <div class="card"><b>Private</b><p>You log in on instagram.com itself. The app never sees your password; data stays on your Mac.</p></div>
+  </div>
+
+  <h2>Install in a minute</h2>
+  <ol class="steps">
+    <li>Open <b>IG-Cleaning.dmg</b> and drag <b>IG Cleaning</b> into <b>Applications</b>.</li>
+    <li class="warn">The first time, macOS says <i>“Apple could not verify ‘IG Cleaning’ is free of malware…”</i>. That's normal for indie apps not notarized by Apple. Click <b>Done</b>, open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b>. Only once.</li>
+    <li>Log in on the <b>Instagram</b> window and press <b>Analyze my account</b>. Pick who to remove and press <b>Unfollow</b>.</li>
+  </ol>
+
+  <footer>Built by <a href="https://www.linkedin.com/in/nacho-san-benito/">Ignacio San Benito</a> · Instagram doesn't officially allow automation; use at your own risk.</footer>
+</div>
+</body>
+</html>
