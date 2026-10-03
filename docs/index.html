@@ -43,6 +43,49 @@
   kbd{font-family:inherit;font-weight:700}
   footer{margin-top:64px;color:var(--mute);font-size:14px;text-align:center}
   footer a{color:inherit}
+
+  /* install on your Mac: same block on every landing that ships a .dmg */
+  .install{--ia:#d9327e;--ib:var(--line);--is:var(--card);--it:var(--ink);--im:var(--mute);--io:#fff;--mac:#0a84ff}
+  .install .isub{color:var(--im);margin:-8px 0 20px;max-width:62ch}
+  .isteps{list-style:none;padding:0;margin:0;display:grid;gap:14px;counter-reset:is}
+  .isteps>li{counter-increment:is;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start;background:var(--is);border:1px solid var(--ib);border-radius:18px;padding:20px 20px 20px 66px;position:relative}
+  .isteps>li::before{content:counter(is);position:absolute;left:20px;top:20px;width:30px;height:30px;border-radius:50%;background:var(--ia);color:var(--io);font-weight:700;font-size:15px;display:grid;place-items:center}
+  .isteps b.t{display:block;font-size:17px;margin-bottom:6px;color:var(--it)}
+  .isteps p{margin:0;color:var(--im);font-size:15px}
+  .isteps p b{color:var(--it)}
+  .isteps>li.noart{grid-template-columns:1fr}
+  @media (max-width:720px){.isteps>li{grid-template-columns:1fr;padding:18px 18px 18px 60px}.isteps>li::before{left:16px;top:18px}.iart{margin-left:-42px}}
+  /* the drawings: plain HTML, look like macOS, no screenshots */
+  .iart{font:12px/1.35 -apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;color:var(--it);display:flex;justify-content:center}
+  .iwin{width:100%;max-width:300px;background:color-mix(in srgb,var(--is) 88%,var(--it) 6%);border:1px solid var(--ib);border-radius:14px;box-shadow:0 1px 2px rgb(0 0 0/.06),0 12px 30px -12px rgb(0 0 0/.25);padding:16px}
+  .iicon{width:44px;height:44px;border-radius:11px;background:var(--ia);color:#fff;font:700 20px -apple-system,sans-serif;display:grid;place-items:center;flex:none;object-fit:cover}
+  .idrag{display:flex;align-items:center;justify-content:space-around;gap:10px;padding:22px 16px}
+  .idrag span{display:block;text-align:center;font-size:11px;color:var(--im);margin-top:6px}
+  .idrag .arr{flex:1;height:2px;background:var(--ia);position:relative;max-width:90px}
+  .idrag .arr::after{content:"";position:absolute;right:-2px;top:-5px;border:6px solid transparent;border-left:9px solid var(--ia);border-right:0}
+  .ifold{width:52px;height:40px;border-radius:5px 5px 7px 7px;background:linear-gradient(#62b5f7,#3a95e6);position:relative;margin:4px auto 0}
+  .ifold::before{content:"";position:absolute;left:0;top:-6px;width:22px;height:8px;border-radius:4px 4px 0 0;background:#62b5f7}
+  .ifold::after{content:"A";position:absolute;inset:0;display:grid;place-items:center;color:#fff;font:700 15px -apple-system,sans-serif;opacity:.85}
+  .idlg{text-align:center}
+  .idlg .iicon{margin:2px auto 10px;width:40px;height:40px}
+  .idlg h4{margin:0 0 4px;font-size:13px}
+  .idlg p{margin:0 0 12px;font-size:11px;color:var(--im)}
+  .ibtn{display:block;border-radius:7px;padding:5px;font-size:12px;margin-top:6px;background:color-mix(in srgb,var(--it) 10%,transparent)}
+  .ibtn.on{background:var(--mac);color:#fff;outline:3px solid color-mix(in srgb,var(--ia) 55%,transparent);outline-offset:2px}
+  .iset .ihead{font-weight:600;font-size:13px;margin-bottom:10px}
+  .iset .ilbl{font-size:11px;color:var(--im);text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px}
+  .iset .irow{display:flex;align-items:center;gap:10px;justify-content:space-between;background:color-mix(in srgb,var(--it) 5%,transparent);border-radius:9px;padding:10px}
+  .iset .irow span{font-size:11px}
+  .iset .ibtn{margin:0;padding:5px 10px;white-space:nowrap;flex:none}
+  .iwhy{margin-top:14px;background:var(--is);border:1px solid var(--ib);border-radius:18px;padding:20px}
+  .iwhy p{margin:0 0 10px;color:var(--im);font-size:15px}
+  .iwhy p b{color:var(--it)}
+  .iwhy pre{margin:8px 0;padding:12px 14px;border-radius:10px;background:color-mix(in srgb,var(--it) 6%,transparent);overflow-x:auto;font:13px/1.5 ui-monospace,Menlo,monospace;color:var(--it)}
+  .iwhy code{font:12.5px ui-monospace,Menlo,monospace;word-break:break-all;color:var(--it)}
+  .iwhy details{margin-top:6px}
+  .iwhy summary{cursor:pointer;color:var(--it);font-weight:600;font-size:15px;min-height:32px}
+  .iwhy summary:focus-visible{outline:2px solid var(--ia);outline-offset:3px;border-radius:6px}
+  .small a{color:inherit}
 </style>
 </head>
 <body>
@@ -54,9 +97,8 @@
       <p class="lead">A free Mac app that finds who doesn't follow you back — or who you never talk to — protects influencers and friends, and unfollows the rest slowly enough that Instagram doesn't mind.</p>
       <div class="cta">
         <a class="btn main" href="https://github.com/nachoie123/ig-cleaning/releases/latest/download/IG-Cleaning.dmg">⬇ Download for Mac</a>
-        <a class="btn ghost" href="https://github.com/nachoie123/ig-cleaning">GitHub</a>
       </div>
-      <p class="small">Free & open source · macOS 11+ · Apple Silicon and Intel · 18 MB</p>
+      <p class="small">Free &amp; open source · macOS 11+ · Apple Silicon and Intel · 18 MB · <a href="https://github.com/nachoie123/ig-cleaning">Source on GitHub</a> · <a href="#install">How to install</a></p>
     </div>
     <div class="video"><video src="ig-cleaning-promo.mp4" poster="poster.jpg" controls playsinline preload="metadata"></video></div>
   </section>
@@ -71,12 +113,30 @@
     <div class="card"><b>Private</b><p>You log in on instagram.com itself. The app never sees your password; data stays on your Mac.</p></div>
   </div>
 
-  <h2>Install in a minute</h2>
-  <ol class="steps">
-    <li>Open <b>IG-Cleaning.dmg</b> and drag <b>IG Cleaning</b> into <b>Applications</b>.</li>
-    <li class="warn">The first time, macOS says <i>“Apple could not verify ‘IG Cleaning’ is free of malware…”</i>. That's normal for indie apps not notarized by Apple. Click <b>Done</b>, open <b>System Settings → Privacy &amp; Security</b>, scroll down and click <b>Open Anyway</b>. Only once.</li>
-    <li>Log in on the <b>Instagram</b> window and press <b>Analyze my account</b>. Pick who to remove and press <b>Unfollow</b>.</li>
+  <section class="install" id="install">
+  <h2>Install on your Mac</h2>
+  <p class="isub">About a minute. Step 3 happens only the first time.</p>
+  <ol class="isteps">
+    <li>
+      <div><b class="t">Drag it into Applications</b><p>Open <b>IG-Cleaning.dmg</b> and drag <b>IG Cleaning</b> onto the <b>Applications</b> folder.</p></div>
+      <div class="iart" aria-hidden="true"><div class="iwin idrag"><div><img class="iicon" src="icon.png" alt=""><span>IG Cleaning</span></div><div class="arr"></div><div><div class="ifold"></div><span>Applications</span></div></div></div>
+    </li>
+    <li>
+      <div><b class="t">Open it. macOS stops it. Click Done.</b><p>macOS says Apple could not verify “IG Cleaning” is free of malware. It says that about every app that isn't notarized by Apple. Click <b>Done</b>, not Move to Trash.</p></div>
+      <div class="iart" aria-hidden="true"><div class="iwin idlg"><img class="iicon" src="icon.png" alt=""><h4>“IG Cleaning” Not Opened</h4><p>Apple could not verify “IG Cleaning” is free of malware that may harm your Mac or compromise your privacy.</p><span class="ibtn on">Done</span><span class="ibtn">Move to Trash</span></div></div>
+    </li>
+    <li>
+      <div><b class="t">Open Anyway, once</b><p>Open <b>System Settings → Privacy &amp; Security</b>, scroll down to <b>Security</b> and click <b>Open Anyway</b> next to “IG Cleaning” was blocked. Confirm with your password or Touch ID. From then on it opens with a double-click.</p></div>
+      <div class="iart" aria-hidden="true"><div class="iwin iset"><div class="ihead">Privacy &amp; Security</div><div class="ilbl">Security</div><div class="irow"><span>“IG Cleaning” was blocked to protect your Mac.</span><span class="ibtn on">Open Anyway</span></div></div></div>
+    </li>
+  <li class="noart"><div><b class="t">Then: analyze and choose</b><p>Log in on the <b>Instagram</b> window and press <b>Analyze my account</b>. Pick who to remove and press <b>Unfollow</b>.</p></div></li>
   </ol>
+  <div class="iwhy">
+    <p><b>Why the warning?</b> Notarizing an app needs a paid Apple developer account ($99 a year). This is a free side project, so it isn't notarized. The full source code is on GitHub, and you can check that your download is exactly the file I built. In Terminal:</p>
+    <pre>shasum -a 256 ~/Downloads/IG-Cleaning.dmg</pre><p>should print <code>f55d68d81a9c1e6aa7b22944455e636bd3f4bb0ab92f267afea2c02047a810b3</code></p>
+    <details><summary>Prefer the Terminal for step 3?</summary><pre>xattr -dr com.apple.quarantine "/Applications/IG Cleaning.app"</pre></details>
+  </div>
+  </section>
 
   <footer>Built by <a href="https://www.linkedin.com/in/nacho-san-benito/">Ignacio San Benito</a> · Instagram doesn't officially allow automation; use at your own risk.</footer>
 </div>
