@@ -5,7 +5,7 @@
 ![IG Cleaning](docs/poster.jpg)
 
 ▶️ **Watch the 70-second demo:** https://nachosanbenito.com/ig-cleaning/
-⬇️ **Download:** [IG-Cleaning.dmg](https://github.com/nachoie123/ig-cleaning/releases/latest/download/IG-Cleaning.dmg) (macOS 11+, Apple Silicon and Intel)
+⬇️ **Download:** [IG-Cleaning.pkg](https://github.com/nachoie123/ig-cleaning/releases/latest/download/IG-Cleaning.pkg) (macOS 11+, Apple Silicon and Intel)
 
 ## What it does
 1. **Analyzes your account.** Lists everyone you follow, who follows you back, and when you last messaged each one.
@@ -15,9 +15,8 @@
 5. **Keeps a receipt.** An *Unfollowed* tab with photo, name and @username of everyone removed, with a *Follow again* button.
 
 ## Install
-1. Open `IG-Cleaning.dmg` and drag **IG Cleaning** into **Applications**.
-2. The first time, macOS says *"Apple could not verify “IG Cleaning” is free of malware…"*. That's normal for apps not notarized by Apple ($99/year). Click **Done**, then go to **System Settings → Privacy & Security**, scroll down and click **Open Anyway**. Only once.
-3. Log in on the **Instagram** window (it's instagram.com itself) and press **Analyze my account**.
+1. Open `IG-Cleaning.pkg` and click **Install**. It goes into Applications and opens by itself. Signed with Developer ID and notarized by Apple since v1.1, so no "Open Anyway" step.
+2. Log in on the **Instagram** window (it's instagram.com itself) and press **Analyze my account**.
 
 ## Privacy & safety
 - Your password is typed into Instagram's own web page; the app never sees or stores it.
