@@ -8,7 +8,7 @@
    <sparkle:version>1.2</sparkle:version>
    <sparkle:shortVersionString>1.2</sparkle:shortVersionString>
    <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
-   <description>**</description>
+   <description>Se actualiza sola: busca versión nueva al abrirla y una vez al día, y la instala al cerrarla.</description>
    <enclosure url="https://github.com/nachoie123/ig-cleaning/releases/download/v1.2/IG-Cleaning.pkg" length="18302606" type="application/octet-stream"/>
   </item>
  </channel>
