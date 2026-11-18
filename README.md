@@ -15,7 +15,7 @@
 5. **Keeps a receipt.** An *Unfollowed* tab with photo, name and @username of everyone removed, with a *Follow again* button.
 
 ## Install
-1. Open `IG-Cleaning.pkg` and click **Install**. It goes into Applications and opens by itself. Signed with Developer ID and notarized by Apple since v1.1, so no "Open Anyway" step.
+1. Open `IG-Cleaning.pkg` and click **Install**. It goes into Applications and opens by itself. Signed with Developer ID and notarized by Apple since v1.1, so no "Open Anyway" step. Since v1.2 it updates itself: once a day it checks for a new version and installs it the next time you close the app.
 2. Log in on the **Instagram** window (it's instagram.com itself) and press **Analyze my account**.
 
 ## Privacy & safety

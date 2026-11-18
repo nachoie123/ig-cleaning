@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+ <channel>
+  <title>IG Cleaning</title>
+  <item>
+   <title>IG Cleaning 1.2</title>
+   <pubDate>Wed, 18 Nov 2026 11:00:00 +0100</pubDate>
+   <sparkle:version>1.2</sparkle:version>
+   <sparkle:shortVersionString>1.2</sparkle:shortVersionString>
+   <sparkle:minimumSystemVersion>11.0</sparkle:minimumSystemVersion>
+   <description>**</description>
+   <enclosure url="https://github.com/nachoie123/ig-cleaning/releases/download/v1.2/IG-Cleaning.pkg" length="18302606" type="application/octet-stream"/>
+  </item>
+ </channel>
+</rss>

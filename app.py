@@ -21,6 +21,8 @@ from pathlib import Path
 import certifi
 import webview
 
+import actualizador
+
 # Código (dentro del .app, solo lectura) y datos (por usuario) van separados.
 BUNDLE = Path(getattr(sys, "_MEIPASS", Path(__file__).parent))
 DATA = Path.home() / "Library" / "Application Support" / "IG Cleaning"
@@ -568,6 +570,7 @@ class Api:
 
 
 def main():
+    actualizador.empezar("https://nachosanbenito.com/ig-cleaning/appcast.xml", DATA)
     api = Api()
     panel = webview.create_window("IG Cleaning", str(WEB / "index.html"), js_api=api, text_select=True,
                                   width=1180, height=820, min_size=(820, 600))
