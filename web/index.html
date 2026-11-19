@@ -59,6 +59,7 @@
 <header>
   <h1>IG Cleaning</h1>
   <span id="sess" class="pill">Sin sesión</span>
+  <button id="btnLogin">Iniciar sesión en Instagram</button>
   <button id="btnAnalyze">Analizar mi cuenta</button>
   <button id="btnCancel" class="ghost" style="display:none">Cancelar</button>
   <div class="tabs">
@@ -151,7 +152,7 @@ function render(){
       <button class="star ${D.whitelist.includes(pk)?'on':''}" data-star="${pk}" title="Lista blanca: nunca dejar de seguir">★</button></div>`;
   }).join('');
   const n=Object.keys(D.accounts).length;
-  $('#empty').innerHTML = !n ? (ST.logged_in?'Pulsa <b>Analizar mi cuenta</b> para empezar.':'1. Inicia sesión en la ventana <b>Instagram</b>.<br>2. Vuelve aquí y pulsa <b>Analizar mi cuenta</b>.')
+  $('#empty').innerHTML = !n ? (ST.logged_in?'Pulsa <b>Analizar mi cuenta</b> para empezar.':'1. Pulsa <b>Iniciar sesión en Instagram</b> y entra con tu cuenta.<br>2. Cuando ponga «Conectado», pulsa <b>Analizar mi cuenta</b>.')
     + '<p style="font-size:12px;max-width:520px;margin:28px auto 0">Tus datos no salen de este Mac: la app no guarda tu contraseña ni envía nada a ningún servidor salvo a Instagram. Instagram no permite oficialmente automatizar, así que la app va despacio a propósito; úsala bajo tu responsabilidad.</p>'
     : !list.length ? 'Nadie cumple este filtro.' : '';
   renderDone(); if(cur>=0)paint(); else foot();
@@ -181,7 +182,8 @@ async function poll(){
   try{
     ST=await api().status();
     const t=ST.task;
-    $('#sess').textContent=ST.logged_in?('Conectado'+(ST.me?.username?' como @'+ST.me.username:'')):'Sin sesión: entra en la ventana Instagram';
+    $('#sess').textContent=ST.logged_in?('Conectado'+(ST.me?.username?' como @'+ST.me.username:'')):'Sin sesión';
+    $('#btnLogin').style.display=ST.logged_in?'none':'';
     $('#sess').classList.toggle('on',ST.logged_in);
     $('#btnAnalyze').disabled=t.running||!ST.logged_in;
     $('#btnAnalyze').textContent=ST.analyzed_at?'Volver a analizar':'Analizar mi cuenta';
@@ -241,6 +243,7 @@ $('#btnNone').onclick=()=>{sel.clear();anchor=-1;render()};
   for(const pk of [...sel]) if(classify(pk,D.accounts[pk]).prot) sel.delete(pk);
   render();
 }));
+$('#btnLogin').onclick=()=>api().show_ig();
 $('#btnAnalyze').onclick=async()=>{await api().analyze(+$("#infl").value||10000)};
 $('#btnCancel').onclick=()=>api().cancel();
 $('#btnGo').onclick=()=>{

@@ -33,7 +33,11 @@ WEB = DATA / "web"          # el panel se sirve desde aquí para poder enseñar 
 PICS = WEB / "pics"
 STATE_FILE = DATA / "state.json"
 PICS.mkdir(parents=True, exist_ok=True)
-shutil.copy2(BUNDLE / "web" / "index.html", WEB / "index.html")
+_panel = (BUNDLE / "web" / "index.html").read_bytes()
+if not (WEB / "index.html").exists() or (WEB / "index.html").read_bytes() != _panel:
+    (WEB / "index.html").write_bytes(_panel)
+    # si no, WebKit sigue enseñando el panel viejo tras actualizar (la sesión vive en WebKit/, no aquí)
+    shutil.rmtree(Path.home() / "Library" / "Caches" / "com.nachosanbenito.iglimpieza" / "WebKit", ignore_errors=True)
 
 PK_RE = re.compile(r"^\d{1,25}$")
 PIC_HOSTS = (".cdninstagram.com", ".fbcdn.net")
@@ -220,8 +224,16 @@ class Api:
         self.ig = None
         self.task = {"running": False, "step": "", "done": 0, "total": 0, "error": None}
         self.worker_note = ""
+        self._igwin = None
+        self._was_in = False
         self.stop_analysis = False
         self.halt = False    # True tras una respuesta rara: la cola no se mueve hasta reabrir
+
+    def show_ig(self):
+        if self._igwin:
+            self._igwin.show()
+            self._igwin.restore()
+        return True
 
     # ---------- estado ----------
     def status(self):
@@ -231,8 +243,15 @@ class Api:
         except Exception as e:
             who = {}
         today = datetime.now().strftime("%Y-%m-%d")
+        logged = bool(who.get("uid"))
+        if logged and not self._was_in and self._igwin:   # acaba de entrar: su ventana sobra
+            try:
+                self._igwin.hide()
+            except Exception:
+                pass
+        self._was_in = logged
         return {
-            "logged_in": bool(who.get("uid")),
+            "logged_in": logged,
             "me": s["me"],
             "task": self.task,
             "queue": len(s["queue"]),
@@ -574,9 +593,15 @@ def main():
     api = Api()
     panel = webview.create_window("IG Cleaning", str(WEB / "index.html"), js_api=api, text_select=True,
                                   width=1180, height=820, min_size=(820, 600))
+    # Oculta hasta que pulse «Iniciar sesión»; cerrarla solo la esconde (sin ella no hay sesión).
     igwin = webview.create_window("Instagram", "https://www.instagram.com/",
-                                  width=480, height=780, x=40, y=60)
-    api.ig = IG(igwin)
+                                  width=480, height=780, x=40, y=60, hidden=True)
+
+    def _no_cerrar():
+        igwin.hide()
+        return False
+    igwin.events.closing += _no_cerrar
+    api.ig, api._igwin = IG(igwin), igwin
     threading.Thread(target=api.worker_loop, daemon=True).start()
     func = None
     if os.environ.get("IGL_SELFTEST"):
