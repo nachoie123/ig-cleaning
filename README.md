@@ -16,7 +16,7 @@
 
 ## Install
 1. Open `IG-Cleaning.pkg` and click **Install**. It goes into Applications and opens by itself. Signed with Developer ID and notarized by Apple since v1.1, so no "Open Anyway" step. Since v1.2 it updates itself: once a day it checks for a new version and installs it the next time you close the app.
-2. Log in on the **Instagram** window (it's instagram.com itself) and press **Analyze my account**.
+2. Press **Iniciar sesión en Instagram** (log in to Instagram), log in on the window that opens (it's instagram.com itself) and press **Analyze my account**. Once you're in, that window hides itself.
 
 ## Privacy & safety
 - Your password is typed into Instagram's own web page; the app never sees or stores it.
