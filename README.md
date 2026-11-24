@@ -4,7 +4,7 @@
 
 ![IG Cleaning](docs/poster.jpg)
 
-▶️ **Watch the 70-second demo:** https://nachosanbenito.com/ig-cleaning/
+▶️ **Watch the 73-second demo:** https://nachosanbenito.com/ig-cleaning/
 ⬇️ **Download:** [IG-Cleaning.pkg](https://github.com/nachoie123/ig-cleaning/releases/latest/download/IG-Cleaning.pkg) (macOS 11+, Apple Silicon and Intel)
 
 ## What it does
@@ -20,7 +20,7 @@
 
 ## Privacy & safety
 - Your password is typed into Instagram's own web page; the app never sees or stores it.
-- Every request runs inside that Instagram window, with your session. Nothing is sent anywhere except Instagram.
+- Every request runs inside that Instagram window, with your session. Nothing about you is sent anywhere except Instagram; the daily update check only reads a file from nachosanbenito.com.
 - Your data stays on your Mac in `~/Library/Application Support/IG Cleaning` — never inside the app.
 - Only the control panel can talk to the Python side; the Instagram page can't. The panel has a strict Content-Security-Policy and escapes every username.
 
