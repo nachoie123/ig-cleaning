@@ -4,7 +4,7 @@
 
 ![IG Cleaning](docs/poster.jpg)
 
-▶️ **Watch the 73-second demo:** https://nachosanbenito.com/ig-cleaning/
+▶️ **Watch the 57-second demo:** https://nachosanbenito.com/ig-cleaning/
 ⬇️ **Download:** [IG-Cleaning.pkg](https://github.com/nachoie123/ig-cleaning/releases/latest/download/IG-Cleaning.pkg) (macOS 11+, Apple Silicon and Intel)
 
 ## What it does
