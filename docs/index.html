@@ -8,7 +8,7 @@
 <meta property="og:title" content="IG Cleaning: unfollow at a human pace">
 <meta property="og:description" content="Free Mac app: unfollow who doesn't follow you back, one account every 20-40 seconds. Your password never touches the app.">
 <link rel="canonical" href="https://nachosanbenito.com/ig-cleaning/">
-<meta property="og:image" content="https://nachosanbenito.com/ig-cleaning/poster.jpg">
+<meta property="og:image" content="https://nachosanbenito.com/ig-cleaning/poster-film.jpg">
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -115,8 +115,8 @@
 
   /* ---------- the film ---------- */
   .filmband{background:var(--film);color:#ecebea;padding:96px 0}
-  .filmband .wrap{display:grid;grid-template-columns:auto minmax(0,1fr);gap:72px;align-items:center}
-  #film{position:relative;height:min(78vh,720px);aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgb(255 255 255/.08)}
+  .filmband .wrap{display:grid;grid-template-columns:1fr;gap:48px}
+  #film{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgb(255 255 255/.08)}
   #film video{width:100%;height:100%;display:block;object-fit:cover}
   #film:has(.play) video{filter:brightness(.94)}
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #film:has(.play) video{filter:brightness(.86)}}
@@ -130,6 +130,8 @@
   html:not(.js) .play{display:none}
   .play:focus-visible{outline:2px solid #ff0033;outline-offset:4px}
   @media (prefers-reduced-motion:no-preference){.play i{transition:transform .3s var(--ease),background-color .15s}.play:hover i{transform:scale(1.06)}}
+  .filmtext{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 64px;align-items:start}
+  .filmtext>*{grid-column:1}.filmtext .scenes{grid-column:2;grid-row:1 / span 2;margin-top:6px}
   .filmtext h2{font:300 clamp(36px,4.4vw,60px)/1.02 Archivo,sans-serif;letter-spacing:-.03em}
   .filmtext p{color:#a7a4a0;font-size:18px;margin:20px 0 0;max-width:44ch}
   .scenes{list-style:none;padding:0;margin:36px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:14px 32px;max-width:560px}
@@ -301,7 +303,7 @@
     .note{text-align:left}
     .filmband{padding:56px 0}
     .filmband .wrap{grid-template-columns:1fr;gap:32px}
-    #film{height:auto;width:100%;max-width:400px;justify-self:center}
+    .filmtext{grid-template-columns:1fr}.filmtext .scenes{grid-column:1;grid-row:auto;margin-top:12px}
     .play i{width:68px;height:48px;border-radius:12px}.play i svg{width:22px;height:22px}.play span{left:14px;bottom:12px;font-size:14px}.play small{right:10px;bottom:10px}
     .scenes{grid-template-columns:1fr}
     .controls{padding:80px 0 24px}
@@ -376,20 +378,20 @@
   <section class="filmband" id="film-band">
     <div class="wrap">
       <div id="film">
-        <video src="ig-cleaning-promo.mp4" poster="poster.jpg" width="1080" height="1920" controls playsinline preload="none" aria-label="IG Cleaning film, 57 seconds, with sound"></video>
-        <button class="play" type="button" aria-label="Play the film, 57 seconds, with sound"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5Z"/></svg></i><span>Watch the film<br>sound on</span><small>0:57</small></button>
+        <video src="ig-cleaning-film.mp4" poster="poster-film.jpg" width="1920" height="1080" controls playsinline preload="none" aria-label="IG Cleaning film, 50 seconds, with sound"></video>
+        <button class="play" type="button" aria-label="Play the film, 50 seconds, with sound"><i aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5Z"/></svg></i><span>Watch the film<br>sound on</span><small>0:50</small></button>
       </div>
       <div class="filmtext">
-        <h2>the whole thing, in 57 seconds.</h2>
-        <p>Install, log in on Instagram itself, see who's out, protect who matters, pick, and let it run. The names and numbers are made up, and the app itself is in Spanish.</p>
+        <h2>the whole thing, in 50 seconds.</h2>
+        <p>Log in on Instagram itself, see who's out, protect who matters, pick, and let it run. It's the real app on screen, with a stand-in for Instagram: every name and photo is made up, and the app itself is in Spanish.</p>
         <ul class="scenes">
-          <li><button type="button" data-t="12"><b>0:12</b>Installed in a minute</button></li>
-          <li><button type="button" data-t="19"><b>0:19</b>Your password stays yours</button></li>
-          <li><button type="button" data-t="24"><b>0:24</b>See who's out</button></li>
-          <li><button type="button" data-t="29"><b>0:29</b>Influencers, protected</button></li>
-          <li><button type="button" data-t="33"><b>0:33</b>Select lots at once</button></li>
-          <li><button type="button" data-t="39"><b>0:39</b>At a human pace</button></li>
-          <li><button type="button" data-t="46"><b>0:46</b>All in your history</button></li>
+          <li><button type="button" data-t="10"><b>0:10</b>Your password stays yours</button></li>
+          <li><button type="button" data-t="15"><b>0:15</b>See who's out</button></li>
+          <li><button type="button" data-t="20"><b>0:20</b>Influencers, protected</button></li>
+          <li><button type="button" data-t="27"><b>0:27</b>Select lots at once</button></li>
+          <li><button type="button" data-t="30"><b>0:30</b>At a human pace</button></li>
+          <li><button type="button" data-t="38"><b>0:38</b>Stops at the first warning</button></li>
+          <li><button type="button" data-t="42"><b>0:42</b>All in your history</button></li>
         </ul>
       </div>
     </div>

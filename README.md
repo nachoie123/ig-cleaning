@@ -2,9 +2,9 @@
 
 **A free Mac app that unfollows the Instagram accounts that don't follow you back — or that you never talk to — at a human pace, without ever seeing your password.**
 
-![IG Cleaning](docs/poster.jpg)
+![IG Cleaning](docs/poster-film.jpg)
 
-▶️ **Watch the 57-second demo:** https://nachosanbenito.com/ig-cleaning/
+▶️ **Watch the 50-second film:** https://nachosanbenito.com/ig-cleaning/
 ⬇️ **Download:** [IG-Cleaning.pkg](https://github.com/nachoie123/ig-cleaning/releases/latest/download/IG-Cleaning.pkg) (macOS 11+, Apple Silicon and Intel)
 
 ## What it does
